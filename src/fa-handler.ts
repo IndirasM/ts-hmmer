@@ -6,7 +6,7 @@ import { createInterface, Interface } from "readline";
 export class FaModifier {
   constructor() {}
 
-  public async read(): Promise<string[]> {
+  public async read(filePath: string): Promise<string[]> {
     const lineMarker: string = "line";
     const closeMarker: string = "close";
 
@@ -14,7 +14,7 @@ export class FaModifier {
 
     try {
       const file: Interface = createInterface({
-        input: createReadStream("./data/susceptiblem.fa"),
+        input: createReadStream(filePath),
         crlfDelay: Infinity,
       });
 

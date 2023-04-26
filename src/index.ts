@@ -1,11 +1,24 @@
 import { FaModifier } from "./fa-handler";
 
 const modifier = new FaModifier();
-const readLength: number = 219;
 
 (async function run() {
-    const fullFile: string[] = await modifier.read();
-    const filteredFile = modifier.filterIncorrectLines(fullFile, readLength);
+    const args = parseArgs(process.argv);
+
+    const fullFile: string[] = await modifier.read(args.filePath);
+    const filteredFile = modifier.filterIncorrectLines(fullFile, args.readLength);
 
     modifier.writeFilteredFa(filteredFile);
 })()
+
+function parseArgs(args: string[]): Arguments {
+    return {
+        filePath: args[3],
+        readLength: +args[2]
+    }
+}
+
+interface Arguments {
+    filePath: string;
+    readLength: number;
+}
