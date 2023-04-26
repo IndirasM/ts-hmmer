@@ -2,14 +2,12 @@ import { once } from "events";
 import { createReadStream, existsSync, mkdirSync, writeFileSync } from "fs";
 import { dirname, join } from "path";
 import { createInterface, Interface } from "readline";
+import { CLOSE_MARKER, LINE_MARKER } from "../constants";
 
 export class FaModifier {
   constructor() {}
 
   public async read(filePath: string): Promise<string[]> {
-    const lineMarker: string = "line";
-    const closeMarker: string = "close";
-
     const dataLines: string[] = [];
 
     try {
@@ -18,11 +16,11 @@ export class FaModifier {
         crlfDelay: Infinity,
       });
 
-      file.on(lineMarker, (line) => {
+      file.on(LINE_MARKER, (line: string) => {
         dataLines.push(line);
       });
 
-      await once(file, closeMarker);
+      await once(file, CLOSE_MARKER);
     } catch (err) {
       console.error(err);
     }
