@@ -1,5 +1,12 @@
 import { once } from "events";
-import { createReadStream, existsSync, mkdirSync, writeFileSync } from "fs";
+import {
+  appendFileSync,
+  createReadStream,
+  createWriteStream,
+  existsSync,
+  mkdirSync,
+  writeFileSync,
+} from "fs";
 import { dirname, join } from "path";
 import { createInterface, Interface } from "readline";
 import { CLOSE_MARKER, LINE_MARKER } from "../constants";
@@ -35,7 +42,7 @@ export class FaModifier {
     return this.removeStringsStartingWithGreaterThan(filteredLines);
   }
 
-  public async writeFilteredFa(data: string[]): Promise<void> {
+  public writeFilteredFa(data: string[]): void {
     const fileName: string = "filtered.fa";
     const filePath: string = join("output", fileName);
     const dir = dirname(filePath);
@@ -61,4 +68,35 @@ export class FaModifier {
       return true;
     });
   }
+
+  writeGeneratedData(data: string[], fileName: string = "generated.fa"): Promise<void> {
+  const chunkSize = 10000;
+  const filePath: string = join("output", fileName);
+  const dir = dirname(filePath);
+
+  return new Promise<void>((resolve, reject) => {
+    if (!existsSync(dir)) {
+      mkdirSync(dir, { recursive: true });
+    }
+
+    const writeStream = createWriteStream(`./${dir}/${fileName}`);
+
+    let i = 0;
+    const writeNextChunk = () => {
+      while (i < data.length) {
+        const chunk = data.slice(i, i + chunkSize);
+        i += chunkSize;
+
+        if (!writeStream.write(`${chunk.join('\n')}\n`)) {
+          writeStream.once('drain', writeNextChunk);
+          return;
+        }
+      }
+
+      writeStream.end();
+    };
+
+    writeNextChunk();
+  });
+}
 }
