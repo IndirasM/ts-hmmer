@@ -1,6 +1,5 @@
 import { once } from "events";
 import {
-  appendFileSync,
   createReadStream,
   createWriteStream,
   existsSync,
@@ -11,7 +10,7 @@ import { dirname, join } from "path";
 import { createInterface, Interface } from "readline";
 import { CLOSE_MARKER, LINE_MARKER } from "../constants";
 
-export class FaModifier {
+export class FaHandler {
   constructor() {}
 
   public async read(filePath: string): Promise<string[]> {
@@ -69,34 +68,37 @@ export class FaModifier {
     });
   }
 
-  writeGeneratedData(data: string[], fileName: string = "generated.fa"): Promise<void> {
-  const chunkSize = 10000;
-  const filePath: string = join("output", fileName);
-  const dir = dirname(filePath);
+  writeGeneratedData(
+    data: string[],
+    fileName: string = "generated.fa"
+  ): Promise<void> {
+    const chunkSize = 10000;
+    const filePath: string = join("output", fileName);
+    const dir = dirname(filePath);
 
-  return new Promise<void>((resolve, reject) => {
-    if (!existsSync(dir)) {
-      mkdirSync(dir, { recursive: true });
-    }
-
-    const writeStream = createWriteStream(`./${dir}/${fileName}`);
-
-    let i = 0;
-    const writeNextChunk = () => {
-      while (i < data.length) {
-        const chunk = data.slice(i, i + chunkSize);
-        i += chunkSize;
-
-        if (!writeStream.write(`${chunk.join('\n')}\n`)) {
-          writeStream.once('drain', writeNextChunk);
-          return;
-        }
+    return new Promise<void>((resolve, reject) => {
+      if (!existsSync(dir)) {
+        mkdirSync(dir, { recursive: true });
       }
 
-      writeStream.end();
-    };
+      const writeStream = createWriteStream(`./${dir}/${fileName}`);
 
-    writeNextChunk();
-  });
-}
+      let i = 0;
+      const writeNextChunk = () => {
+        while (i < data.length) {
+          const chunk = data.slice(i, i + chunkSize);
+          i += chunkSize;
+
+          if (!writeStream.write(`${chunk.join("\n")}\n`)) {
+            writeStream.once("drain", writeNextChunk);
+            return;
+          }
+        }
+
+        writeStream.end();
+      };
+
+      writeNextChunk();
+    });
+  }
 }

@@ -3,17 +3,17 @@ export class DataGenerator {
 
   public generateData(arr: string[]): string[] {
     const outputData: string[] = [];
-    let header: string = '';
+    let header: string = "";
 
     for (const str of arr) {
       if (str.startsWith(">")) {
         header = str;
       } else {
         const substrands = this.createSubStrand(str);
-          for (const substrand of substrands) {
-            outputData.push(header);
-            outputData.push(substrand);
-          }
+        for (const substrand of substrands) {
+          outputData.push(header);
+          outputData.push(substrand);
+        }
       }
     }
 
