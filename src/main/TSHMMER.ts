@@ -1,6 +1,7 @@
 import { FaHandler } from "../file-handling/fa-handler";
 import { DataGenerator } from "../generators/data-generator";
-import { Arguments } from "../types";
+import { Simplifier } from "../generators/simplifier";
+import { Arguments, Mode } from "../types";
 
 export class TSHMMER {
   constructor() {}
@@ -8,29 +9,46 @@ export class TSHMMER {
   private dataHandler: FaHandler = new FaHandler();
   private generator: DataGenerator = new DataGenerator();
 
-  async run() {
+  async run(): Promise<void> {
     const args: Arguments = this.parseArgs(
       +process.argv[2],
-      process.argv.slice(3)
+      +process.argv[3],
+      process.argv.slice(4)
     );
 
-    const fullFile: string[] = await this.dataHandler.read(args.filePath);
+    let combinedData: string[] = [];
+    
+    for(let path of args.filePath) {
+      const file: string[] = await this.dataHandler.read(path);
+      combinedData = combinedData.concat(file);
+    }
+    
     const filteredFile: string[] = this.dataHandler.filterIncorrectLines(
-      fullFile,
+      combinedData,
       args.readLength
     );
 
-    this.dataHandler.writeFilteredFa(filteredFile);
-
-    const generatedData: string[] = this.generator.generateData(filteredFile);
-
-    this.dataHandler.writeGeneratedData(generatedData);
+    if (args.mode === Mode.Preparator) {      
+      this.dataHandler.writeFilteredFa(filteredFile.slice(0, 250));
+    }
+    if (args.mode === Mode.Generator) {
+      const generatedData: string[] = this.generator.generateData(filteredFile);
+      this.dataHandler.writeGeneratedData(generatedData);
+    }
+    if (args.mode === Mode.Cleanup) {
+      const cleaned = Simplifier.cleanFile(filteredFile)
+      this.dataHandler.writeFilteredFa(cleaned);
+    }
+    if (args.mode === Mode.LFA) {
+      this.dataHandler.writeFilteredFa(Simplifier.lowercase(filteredFile))
+    }
   }
 
-  private parseArgs(readLength: number, files: string[]): Arguments {
+  private parseArgs(readLength: number, mode: number, filePath: string[]): Arguments {
     return {
-      filePath: files[0],
-      readLength: readLength,
+      filePath,
+      readLength,
+      mode
     };
   }
 }
