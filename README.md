@@ -18,7 +18,7 @@ Note: HMMER requires sequences from which HMMs are built to be of the same lengt
 
 0 - Generator - generates data by going through each sequence, cutting a 147bp segment from it, moving the window by 1 bp and repeating the process. Can generate a large amount of data from sequences - the more and longer - the more generated.
 
-1 - Preparator - cleans and prepares files for hmmbuild use. Main use for most cases.
+1 - Preparator - cleans and prepares files for hmmbuild use. Main use for most cases. Can merge multiple sequence files into a single prepared one if one file is provided.
 
 2 - Merge - merges sequences into one big sequence.
 
@@ -34,9 +34,10 @@ Note: HMMER requires sequences from which HMMs are built to be of the same lengt
 
 After cloning the initial run requires `npm ci` to install the required dependencies.
 
-To run a complete workflow, run `npm run start <read-length> <input-file>`.
-At the moment ir requires data to be in `data/` folder.
+To run a complete workflow, run `npm run start <mode> <input-file>`.
+All the outputs of the application will be placed in the `output` folder.
+The `Split` mode will create subfolders for `sequences` and `models` as it can require a large amount of files to be created and in that case they become hardly readable.
 
 Arguments are accepted in order:
-  -Read length - main read length of the file provided
-  -Input file - input file which should be handled
+  -Mode - enter the number of the mode that you'd like the application to run in
+  -Input file - input file which should be handled. Some modes accept multiple files if required.
