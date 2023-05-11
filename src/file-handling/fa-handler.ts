@@ -41,8 +41,7 @@ export class FaHandler {
     return this.removeStringsStartingWithGreaterThan(filteredLines);
   }
 
-  public writeFilteredFa(data: string[]): void {
-    const fileName: string = "filtered.fa";
+  public writeFa(data: string[], fileName = "filtered.fa"): void {
     const filePath: string = join("output", fileName);
     const dir = dirname(filePath);
 
@@ -50,22 +49,28 @@ export class FaHandler {
       mkdirSync(dir, { recursive: true });
     }
 
-    return writeFileSync(`./${dir}/filtered.fa`, data.join("\n"));
+    return writeFileSync(`./${dir}/${fileName}`, data.join("\n"));
   }
 
   private filterLine(line: string, lineLength: number): string {
-    return line.length === lineLength ? line : "";
+    return line.length === lineLength &&
+      !line.includes("N") &&
+      !line.includes("n")
+      ? line
+      : "";
   }
 
   private removeStringsStartingWithGreaterThan(data: string[]): string[] {
     return data.filter((str: string, index: number) => {
-      if (str.startsWith(">")) {
-        if (data[index + 1]?.startsWith(">")) {
-          return false;
-        }
-      }
-      return true;
+      if (str.startsWith(">") && data[index + 1]?.startsWith(">")) {
+        return false;
+      } else return true;
     });
+  }
+
+  filterNonUniques(combinedData: string[]): string[] {
+    let newData = new Set(combinedData);
+    return [...newData];
   }
 
   writeGeneratedData(
@@ -76,7 +81,7 @@ export class FaHandler {
     const filePath: string = join("output", fileName);
     const dir = dirname(filePath);
 
-    return new Promise<void>((resolve, reject) => {
+    return new Promise<void>(() => {
       if (!existsSync(dir)) {
         mkdirSync(dir, { recursive: true });
       }
@@ -100,5 +105,25 @@ export class FaHandler {
 
       writeNextChunk();
     });
+  }
+
+  splitAndWrite(strings: string[]): void {
+    const chunkSize = 200;
+
+    for (let i = 0; i < strings.length; i += chunkSize) {
+      const chunk = strings.slice(i, i + chunkSize);
+      const fileName = `sequence${i / chunkSize}.fa`;
+      this.writeSequences(chunk, fileName);
+    }
+  }
+
+  private writeSequences(data: string[], fileName: string): void {
+    const filePath: string = join("output", "sequences");
+
+    if (!existsSync(filePath)) {
+      mkdirSync(filePath, { recursive: true });
+    }
+
+    return writeFileSync(`./${filePath}/${fileName}`, data.join("\n"));
   }
 }

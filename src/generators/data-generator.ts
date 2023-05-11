@@ -25,7 +25,7 @@ export class DataGenerator {
     const nucleosomeLength = 147;
 
     for (let i = 0; i <= dnaString.length - nucleosomeLength; i++) {
-      subStrands.push(dnaString.substr(i, nucleosomeLength));
+      subStrands.push(dnaString.slice(i, nucleosomeLength + i));
     }
 
     return subStrands;
