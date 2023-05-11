@@ -41,7 +41,7 @@ export class FaHandler {
     return this.removeStringsStartingWithGreaterThan(filteredLines);
   }
 
-  public writeFilteredFa(data: string[], fileName = "filtered.fa"): void {
+  public writeFa(data: string[], fileName = "filtered.fa"): void {
     const filePath: string = join("output", fileName);
     const dir = dirname(filePath);
 
