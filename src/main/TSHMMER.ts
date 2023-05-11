@@ -33,11 +33,11 @@ export class TSHMMER {
         this.dataHandler.writeGeneratedData(generatedData);
         break;
 
-      case Mode.Cleanup:
+      case Mode.Merge:
         const cleaned: string[] = Simplifier.cleanFile(
           await this.readFullFa(args)
         );
-        this.dataHandler.writeFa(cleaned);
+        this.dataHandler.writeFa(cleaned, undefined, false);
         break;
 
       case Mode.LFA:

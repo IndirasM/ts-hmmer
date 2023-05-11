@@ -7,7 +7,7 @@ export interface Arguments {
 export enum Mode {
   Generator,
   Preparator,
-  Cleanup,
+  Merge,
   LFA,
   Split,
   NameSequences,
