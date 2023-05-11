@@ -1,3 +1,4 @@
+import { HmmBuilder } from "../executors/hmmbuilder";
 import { FaHandler } from "../file-handling/fa-handler";
 import { DataGenerator } from "../generators/data-generator";
 import { Simplifier } from "../generators/simplifier";
@@ -41,6 +42,10 @@ export class TSHMMER {
     }
     if (args.mode === Mode.LFA) {
       this.dataHandler.writeFilteredFa(Simplifier.lowercase(filteredFile))
+    }
+    if (args.mode === Mode.Split) {
+      this.dataHandler.splitAndWrite(filteredFile)
+      HmmBuilder.buildModelsForFiles()
     }
   }
 

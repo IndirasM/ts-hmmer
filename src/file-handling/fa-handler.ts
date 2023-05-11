@@ -41,8 +41,7 @@ export class FaHandler {
     return this.removeStringsStartingWithGreaterThan(filteredLines);
   }
 
-  public writeFilteredFa(data: string[]): void {
-    const fileName: string = "filtered.fa";
+  public writeFilteredFa(data: string[], fileName = "filtered.fa"): void {
     const filePath: string = join("output", fileName);
     const dir = dirname(filePath);
 
@@ -54,7 +53,11 @@ export class FaHandler {
   }
 
   private filterLine(line: string, lineLength: number): string {
-    return line.length === lineLength && !line.includes('N') && !line.includes('n') ? line : "";
+    return line.length === lineLength &&
+      !line.includes("N") &&
+      !line.includes("n")
+      ? line
+      : "";
   }
 
   private removeStringsStartingWithGreaterThan(data: string[]): string[] {
@@ -67,7 +70,7 @@ export class FaHandler {
 
   filterNonUniques(combinedData: string[]): string[] {
     let newData = new Set(combinedData);
-    return [...newData]
+    return [...newData];
   }
 
   writeGeneratedData(
@@ -102,5 +105,25 @@ export class FaHandler {
 
       writeNextChunk();
     });
+  }
+
+  splitAndWrite(strings: string[]): void {
+    const chunkSize = 200;
+
+    for (let i = 0; i < strings.length; i += chunkSize) {
+      const chunk = strings.slice(i, i + chunkSize);
+      const fileName = `sequence${i / chunkSize}.fa`;
+      this.writeSequences(chunk, fileName);
+    }
+  }
+
+  private writeSequences(data: string[], fileName: string): void {
+    const filePath: string = join("output", "sequences");
+
+    if (!existsSync(filePath)) {
+      mkdirSync(filePath, { recursive: true });
+    }
+
+    return writeFileSync(`./${filePath}/${fileName}`, data.join("\n"));
   }
 }

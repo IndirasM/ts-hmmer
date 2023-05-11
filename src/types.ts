@@ -4,12 +4,10 @@ export interface Arguments {
   mode: Mode
 }
 
-
-
-
 export enum Mode {
   Generator,
   Preparator,
   Cleanup,
-  LFA
+  LFA,
+  Split
 }
