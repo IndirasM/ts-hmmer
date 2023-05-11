@@ -11,8 +11,6 @@ import { createInterface, Interface } from "readline";
 import { CLOSE_MARKER, LINE_MARKER } from "../constants";
 
 export class FaHandler {
-  constructor() {}
-
   public async read(filePath: string): Promise<string[]> {
     const dataLines: string[] = [];
 
@@ -43,7 +41,7 @@ export class FaHandler {
 
   public writeFa(data: string[], fileName = "filtered.fa"): void {
     const filePath: string = join("output", fileName);
-    const dir = dirname(filePath);
+    const dir: string = dirname(filePath);
 
     if (!existsSync(dir)) {
       mkdirSync(dir, { recursive: true });

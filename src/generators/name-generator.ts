@@ -1,12 +1,10 @@
 export class NameGenerator {
-  constructor() {}
-
   public static generateNames(file: string[]): string[] {
-    let counter = 1;
+    let counter: number = 1;
 
-    return file.map((str) => {
+    return file.map((str: string) => {
       if (str === ">") {
-        const updatedHeader = `>${counter}`;
+        const updatedHeader: string = `>${counter}`;
         counter++;
         return updatedHeader;
       }

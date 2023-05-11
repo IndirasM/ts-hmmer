@@ -4,12 +4,12 @@ export interface Arguments {
   mode: Mode
 }
 
-
 export enum Mode {
   Generator,
   Preparator,
   Cleanup,
   LFA,
   Split,
-  NameSequences
+  NameSequences,
+  UniqueFilter
 }

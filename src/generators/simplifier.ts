@@ -1,12 +1,10 @@
 export class Simplifier {
-  constructor() {}
-
   static cleanFile(data: string[]) {
-    return data.map((line) => line.replace(">", "").replace("\n", ""));
+    return data.map((line: string) => line.replace(">", "").replace("\n", ""));
   }
 
   static lowercase(data: string[]) {
-    return data.map((line) =>
+    return data.map((line: string) =>
       line.startsWith(">") ? line : line.toLowerCase()
     );
   }

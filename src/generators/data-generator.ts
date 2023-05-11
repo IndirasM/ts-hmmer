@@ -1,11 +1,11 @@
-export class DataGenerator {
-  constructor() {}
+import { NUCLEOSOME_LENGTH } from "../constants";
 
-  public generateData(arr: string[]): string[] {
+export class DataGenerator {
+  public generateData(fa: string[]): string[] {
     const outputData: string[] = [];
     let header: string = "";
 
-    for (const str of arr) {
+    for (const str of fa) {
       if (str.startsWith(">")) {
         header = str;
       } else {
@@ -22,10 +22,9 @@ export class DataGenerator {
 
   private createSubStrand(dnaString: string): string[] {
     const subStrands: string[] = [];
-    const nucleosomeLength = 147;
 
-    for (let i = 0; i <= dnaString.length - nucleosomeLength; i++) {
-      subStrands.push(dnaString.slice(i, nucleosomeLength + i));
+    for (let i = 0; i <= dnaString.length - NUCLEOSOME_LENGTH; i++) {
+      subStrands.push(dnaString.slice(i, NUCLEOSOME_LENGTH + i));
     }
 
     return subStrands;
