@@ -29,6 +29,7 @@ Note: HMMER requires sequences from which HMMs are built to be of the same lengt
 5 - Sequence Naming - in case a FASTA file only has the starting name mark (>) but no name, this mode will add indices as names to the sequences.
 
 6 - Unique Filter - [**EXPERIMENTAL**] This mode filters out non-unique sequences. In current state, it only filters out according to the uniquity of the string - it can remove lines from a FASTA file if the name or the sequence itself matches another one. Be careful when using this.
+A suggestion would be to use tools currently available on [The Galaxy Platform](https://usegalaxy.org/)
 
 ### Installation and running
 
