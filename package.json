@@ -1,6 +1,6 @@
 {
-  "name": "masters",
-  "version": "1.0.0",
+  "name": "ts-hmmer",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
