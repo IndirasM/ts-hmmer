@@ -7,7 +7,7 @@ import {
   writeFileSync,
 } from "fs";
 import { dirname, join } from "path";
-import { createInterface, Interface } from "readline";
+import { Interface, createInterface } from "readline";
 import { CLOSE_MARKER, LINE_MARKER } from "../constants";
 
 export class FaHandler {

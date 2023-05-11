@@ -6,7 +6,7 @@ import {
   readdirSync,
 } from "fs";
 import { execSync } from "node:child_process";
-import { dirname, join } from "path";
+import { join } from "path";
 
 export class HmmBuilder {
   constructor() {}
