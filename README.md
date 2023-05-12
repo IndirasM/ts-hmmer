@@ -9,12 +9,12 @@ Preparation for HMMER use for nucleosome detection. Software created for Masters
   - [HMMER](http://hmmer.org/)
   - [ClustalO](http://www.clustal.org/) (or ClustalW with modifications)
 
-  HMMER and Clustal are optional requirements - they are being run only in a couple of modes of the application.
-  In Linux, the required software can be installed via:
-  -`sudo apt install clustalo` for ClustalO
-  -`sudo apt install clustalw` for ClustalW
-  For Node, it is usually useful to install it alongside [Node Version Manager](https://github.com/nvm-sh/nvm) and pick version through it:
-  `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash` and follow it by `nvm install node`
+  HMMER and Clustal are optional requirements - they are being run only in a couple of modes of the application.  
+  In Linux, the required software can be installed via:  
+  -`sudo apt install clustalo` for ClustalO  
+  -`sudo apt install clustalw` for ClustalW  
+  For Node, it is usually useful to install it alongside [Node Version Manager](https://github.com/nvm-sh/nvm) and pick version through it:  
+  `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash` and follow it by `nvm install node`  
   
 ## Running
 
@@ -30,7 +30,7 @@ Note: HMMER requires sequences from which HMMs are built to be of the same lengt
 
 3 - Lowercase For Alignment - Alignment for large files with short sequences was done with [MAFFT](https://mafft.cbrc.jp/alignment/server/large.html?aug31). MAFFT by default requires nucleotides to all be lowercase, otherwise it will be treated as an aminoacid. This mode is used to prepare files to be used in MAFFT.
 
-4 - Split - this mode requires HMMER and ClustalO (or ClustalW with modifications) to be used. Without HMMER an error will be thrown, but big sequence files will still be split up in chunks of 100 sequences. If HMMER is present, it will be used to train multiple small HMMs for each chunk of sequences and one large HMM database will be created from them. This mode works in 3 steps - firstly it will split the input file into chunks of 100 sequences, the next step will be multiple sequence alignment using ClustalO, and the next step will be the use of HMMER via `hmmbuild` to build a series of HMMs for each cluster, finally, all of the small HMMs will be combined into a singular HMM database to search against.
+4 - Split - this mode requires HMMER and ClustalO (or ClustalW with modifications) to be used. Without HMMER an error will be thrown, but big sequence files will still be split up in chunks of 100 sequences. If HMMER is present, it will be used to train multiple small HMMs for each chunk of sequences and one large HMM database will be created from them.  This mode works in 3 steps - firstly it will split the input file into chunks of 100 sequences, the next step will be multiple sequence alignment using ClustalO, and the next step will be the use of HMMER via `hmmbuild` to build a series of HMMs for each cluster, finally, all of the small HMMs will be combined into a singular HMM database to search against.
 
 5 - Sequence Naming - in case a FASTA file only has the starting name mark (>) but no name, this mode will add indices as names to the sequences.
 
@@ -45,12 +45,12 @@ A suggestion would be to use tools currently available on [The Galaxy Platform](
 
 After cloning the initial run requires `npm ci` to install the required dependencies.
 
-To run a complete workflow, run `npm run start <mode> <input-file(s)>`.
-All the outputs of the application will be placed in the `output` folder.
-The `Split` mode will create subfolders for `sequences`, `alignments` and `models` as it can require a large amount of files to be created and in that case they become hardly readable.
+To run a complete workflow, run `npm run start <mode> <input-file(s)>`.  
+All the outputs of the application will be placed in the `output` folder.  
+The `Split` mode will create subfolders for `sequences`, `alignments` and `models` as it can require a large amount of files to be created and in that case they become hardly readable.  
 
-Arguments are accepted in order:
-  -Mode - enter the number of the mode that you'd like the application to run in
-  -Input file(s) - input file which should be handled. Some modes accept multiple files if required.
+Arguments are accepted in order:  
+  -Mode - enter the number of the mode that you'd like the application to run in  
+  -Input file(s) - input file which should be handled. Some modes accept multiple files if required.  
 
 Original plans included integration to the Galaxy platform but have been put off indefinitely. Might be revisited in the future.
