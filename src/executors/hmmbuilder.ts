@@ -50,7 +50,7 @@ export class HmmBuilder {
     const outDir = "output";
     const sequencesDir = join(outDir, "sequences");
     const alignmentsDir = join(outDir, "alignments");
-  
+
     if (!existsSync(alignmentsDir)) {
       mkdirSync(alignmentsDir, { recursive: true });
     }
@@ -63,7 +63,10 @@ export class HmmBuilder {
 
       const commandClustalW = `clustalw -type=DNA -quicktree -output=FASTA -outfile=alignments/${alignment} -outorder=ALIGNED -quiet -align -infile=sequences/${sequence}`;
       const commandClustalO = `clustalo -i sequences/${sequence} -t DNA --infmt=fa -o alignments/${alignment} --outfmt=fa --threads=8 --force`;
-      execSync(useOlder? commandClustalW : commandClustalO, { cwd: outDir, encoding: "utf-8" });
+      execSync(useOlder ? commandClustalW : commandClustalO, {
+        cwd: outDir,
+        encoding: "utf-8",
+      });
     });
   }
 }

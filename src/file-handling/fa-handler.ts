@@ -39,7 +39,11 @@ export class FaHandler {
     return this.removeStringsStartingWithGreaterThan(filteredLines);
   }
 
-  public writeFa(data: string[], fileName = "filtered.fa", multiLine: boolean = true): void {
+  public writeFa(
+    data: string[],
+    fileName = "filtered.fa",
+    multiLine: boolean = true
+  ): void {
     const filePath: string = join("output", fileName);
     const dir: string = dirname(filePath);
     const separator: string = multiLine ? "\n" : "";
