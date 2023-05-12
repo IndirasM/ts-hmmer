@@ -24,18 +24,20 @@ Note: HMMER requires sequences from which HMMs are built to be of the same lengt
 
 3 - Lowercase For Alignment - Alignment for large files with short sequences was done with [MAFFT](https://mafft.cbrc.jp/alignment/server/large.html?aug31). MAFFT by default requires nucleotides to all be lowercase, otherwise it will be treated as an aminoacid. This mode is used to prepare files to be used in MAFFT.
 
-4 - Split - this mode requires HMMER to be used. Without HMMER an error will be thrown, but big sequence files will still be split up in chunks of 100 sequences. If HMMER is present, it will be used to train multiple small HMMs for each chunk of sequences and one large HMM database will be created from them.
+4 - Split - this mode requires HMMER and ClustalO (or ClustalW with modifications) to be used. Without HMMER an error will be thrown, but big sequence files will still be split up in chunks of 100 sequences. If HMMER is present, it will be used to train multiple small HMMs for each chunk of sequences and one large HMM database will be created from them. This mode works in 3 steps - firstly it will split the input file into chunks of 100 sequences, the next step will be multiple sequence alignment using ClustalO, and the next step will be the use of HMMER via `hmmbuild` to build a series of HMMs for each cluster, finally, all of the small HMMs will be combined into a singular HMM database to search against.
 
 5 - Sequence Naming - in case a FASTA file only has the starting name mark (>) but no name, this mode will add indices as names to the sequences.
 
 6 - Unique Filter - [**EXPERIMENTAL**] This mode filters out non-unique sequences. In current state, it only filters out according to the uniquity of the string - it can remove lines from a FASTA file if the name or the sequence itself matches another one. Be careful when using this.
 A suggestion would be to use tools currently available on [The Galaxy Platform](https://usegalaxy.org/)
 
+7 - Filtered nHMMER runner - this mode requires HMMER to be present. It runs the `nhmmer` command and outputs a file that was filtered in a way, so that outputs with 0 hits are removed. Inputs are required in the same order as usual - hmm input file and sequences file.
+
 ### Installation and running
 
 After cloning the initial run requires `npm ci` to install the required dependencies.
 
-To run a complete workflow, run `npm run start <mode> <input-file>`.
+To run a complete workflow, run `npm run start <mode> <input-file(s)>`.
 All the outputs of the application will be placed in the `output` folder.
 The `Split` mode will create subfolders for `sequences` and `models` as it can require a large amount of files to be created and in that case they become hardly readable.
 

@@ -11,5 +11,6 @@ export enum Mode {
   LFA,
   Split,
   NameSequences,
-  UniqueFilter
+  UniqueFilter,
+  NhmmerFilter
 }

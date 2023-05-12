@@ -1,4 +1,5 @@
 import { HmmBuilder } from "../executors/hmmbuilder";
+import { NHmmer } from "../executors/nhmmer";
 import { FaHandler } from "../file-handling/fa-handler";
 import { DataGenerator } from "../generators/data-generator";
 import { NameGenerator } from "../generators/name-generator";
@@ -47,9 +48,13 @@ export class TSHMMER {
         break;
 
       case Mode.Split:
+        console.log("Splitting sequences...");
         this.dataHandler.splitAndWrite(await this.readFullFa(args));
+        console.log("Aligning sequences...");
         HmmBuilder.alignFasta();
+        console.log("Building HMMs...");
         HmmBuilder.buildModelsForFiles();
+        console.log("Joining HMMs...");
         HmmBuilder.joinHMMs();
         break;
 
@@ -72,6 +77,10 @@ export class TSHMMER {
         );
         this.dataHandler.writeFa(filteredUnique);
 
+      case Mode.NhmmerFilter:
+          NHmmer.runFilteredNhmmer(args.filePath);
+          break;
+
       default:
         break;
     }
@@ -91,17 +100,5 @@ export class TSHMMER {
       await this.readBasic(args),
       args.readLength
     );
-  }
-
-  private parseArgs(
-    readLength: number,
-    mode: number,
-    filePath: string[]
-  ): Arguments {
-    return {
-      filePath,
-      readLength,
-      mode,
-    };
   }
 }
