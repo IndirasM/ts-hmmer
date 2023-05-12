@@ -42,7 +42,7 @@ After cloning the initial run requires `npm ci` to install the required dependen
 
 To run a complete workflow, run `npm run start <mode> <input-file(s)>`.
 All the outputs of the application will be placed in the `output` folder.
-The `Split` mode will create subfolders for `sequences` and `models` as it can require a large amount of files to be created and in that case they become hardly readable.
+The `Split` mode will create subfolders for `sequences`, `alignments` and `models` as it can require a large amount of files to be created and in that case they become hardly readable.
 
 Arguments are accepted in order:
   -Mode - enter the number of the mode that you'd like the application to run in
