@@ -32,7 +32,9 @@ Note: HMMER requires sequences from which HMMs are built to be of the same lengt
 6 - Unique Filter - [**EXPERIMENTAL**] This mode filters out non-unique sequences. In current state, it only filters out according to the uniquity of the string - it can remove lines from a FASTA file if the name or the sequence itself matches another one. Be careful when using this.
 A suggestion would be to use tools currently available on [The Galaxy Platform](https://usegalaxy.org/)
 
-7 - Filtered nHMMER runner - this mode requires HMMER to be present. It runs the `nhmmer` command and outputs a file that was filtered in a way, so that outputs with 0 hits are removed. Inputs are required in the same order as usual - hmm input file and sequences file.
+7 - Sequence shortener - This mode takes the sequences and cuts a 140bp section from the middle of it. This mode was created to have a simplified version of the training data as it has the center of the nucleosome in the middle.
+
+8 - Filtered nHMMER runner - this mode requires HMMER to be present. It runs the `nhmmer` command and outputs a file that was filtered in a way, so that outputs with 0 hits are removed. Inputs are required in the same order as usual - hmm input file and sequences file.
 
 ### Installation and running
 

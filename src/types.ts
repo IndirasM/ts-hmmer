@@ -1,7 +1,7 @@
 export interface Arguments {
   filePath: string[];
   readLength: number;
-  mode: Mode
+  mode: Mode;
 }
 
 export enum Mode {
@@ -12,5 +12,6 @@ export enum Mode {
   Split,
   NameSequences,
   UniqueFilter,
-  NhmmerFilter
+  ShortenSequences,
+  NhmmerFilter,
 }

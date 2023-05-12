@@ -48,13 +48,10 @@ export class TSHMMER {
         break;
 
       case Mode.Split:
-        console.log("Splitting sequences...");
+        console.warn("WARNING: With large files this may take a longer time.");
         this.dataHandler.splitAndWrite(await this.readFullFa(args));
-        console.log("Aligning sequences...");
         HmmBuilder.alignFasta();
-        console.log("Building HMMs...");
         HmmBuilder.buildModelsForFiles();
-        console.log("Joining HMMs...");
         HmmBuilder.joinHMMs();
         break;
 
@@ -76,12 +73,21 @@ export class TSHMMER {
           args.readLength
         );
         this.dataHandler.writeFa(filteredUnique);
+        break;
+
+      case Mode.ShortenSequences:
+        const shortenedSequences: string[] = Simplifier.shortenSequences(
+          await this.readFullFa(args)
+        );
+        this.dataHandler.writeFa(shortenedSequences, "shortened.fa");
+        break;
 
       case Mode.NhmmerFilter:
-          NHmmer.runFilteredNhmmer(args.filePath);
-          break;
+        NHmmer.runFilteredNhmmer(args.filePath);
+        break;
 
       default:
+        console.error("Invalid mode.");
         break;
     }
   }
