@@ -46,4 +46,4 @@ The `Split` mode will create subfolders for `sequences` and `models` as it can r
 
 Arguments are accepted in order:
   -Mode - enter the number of the mode that you'd like the application to run in
-  -Input file - input file which should be handled. Some modes accept multiple files if required.
+  -Input file(s) - input file which should be handled. Some modes accept multiple files if required.
