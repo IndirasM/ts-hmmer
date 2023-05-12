@@ -5,10 +5,11 @@ Preparation for HMMER use for nucleosome detection and integration to the Galaxy
 ## Prerequisites
 
   - [NodeJS](https://nodejs.org/en)
-  - npm (installed with NodeJS)
+  - [npm](https://www.npmjs.com/) (installed with NodeJS)
   - [HMMER](http://hmmer.org/)
+  - [ClustalO](http://www.clustal.org/) (or ClustalW with modifications)
 
-  HMMER is an optional requirement - it is being run by only 1 of the application modes.
+  HMMER and Clustal are optional requirements - they are being run only in a couple of modes of the application.
   
 ## Running
 
