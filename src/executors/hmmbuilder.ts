@@ -14,19 +14,19 @@ export class HmmBuilder {
   static buildModelsForFiles(): void {
     const outDir = "output";
     const modelsDir = join(outDir, "models");
-    const sequencesDir = join(outDir, "sequences");
+    const alignmentsDir = join(outDir, "alignments");
 
     if (!existsSync(modelsDir)) {
       mkdirSync(modelsDir, { recursive: true });
     }
 
-    const files = readdirSync(sequencesDir);
+    const files = readdirSync(alignmentsDir);
 
     files.forEach((file, index) => {
-      const sequence = file;
+      const alignment = file;
       const model = `model${index}.hmm`;
 
-      const command = `hmmbuild models/${model} sequences/${sequence}`;
+      const command = `hmmbuild models/${model} alignments/${alignment}`;
       execSync(command, { cwd: outDir, encoding: "utf-8" });
     });
   }
@@ -44,5 +44,26 @@ export class HmmBuilder {
     });
 
     outputStream.end();
+  }
+
+  public static alignFasta(useOlder: boolean = false) {
+    const outDir = "output";
+    const sequencesDir = join(outDir, "sequences");
+    const alignmentsDir = join(outDir, "alignments");
+  
+    if (!existsSync(alignmentsDir)) {
+      mkdirSync(alignmentsDir, { recursive: true });
+    }
+
+    const files = readdirSync(sequencesDir);
+
+    files.forEach((file, index) => {
+      const sequence = file;
+      const alignment = `alignment${index}.fa`;
+
+      const commandClustalW = `clustalw -type=DNA -quicktree -output=FASTA -outfile=alignments/${alignment} -outorder=ALIGNED -quiet -align -infile=sequences/${sequence}`;
+      const commandClustalO = `clustalo -i sequences/${sequence} -t DNA --infmt=fa -o alignments/${alignment} --outfmt=fa --threads=8 --force`;
+      execSync(useOlder? commandClustalW : commandClustalO, { cwd: outDir, encoding: "utf-8" });
+    });
   }
 }

@@ -48,6 +48,7 @@ export class TSHMMER {
 
       case Mode.Split:
         this.dataHandler.splitAndWrite(await this.readFullFa(args));
+        HmmBuilder.alignFasta();
         HmmBuilder.buildModelsForFiles();
         HmmBuilder.joinHMMs();
         break;
