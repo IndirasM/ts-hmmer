@@ -1,6 +1,6 @@
 # ts-hmmer
 
-Preparation for HMMER use for nucleosome detection and integration to the Galaxy Platform
+Preparation for HMMER use for nucleosome detection. Software created for Masters thesis work.
 
 ## Prerequisites
 
@@ -47,3 +47,5 @@ The `Split` mode will create subfolders for `sequences` and `models` as it can r
 Arguments are accepted in order:
   -Mode - enter the number of the mode that you'd like the application to run in
   -Input file(s) - input file which should be handled. Some modes accept multiple files if required.
+
+Original plans included integration to the Galaxy platform but have been put off indefinitely. Might be revisited in the future.
