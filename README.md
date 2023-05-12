@@ -10,6 +10,11 @@ Preparation for HMMER use for nucleosome detection. Software created for Masters
   - [ClustalO](http://www.clustal.org/) (or ClustalW with modifications)
 
   HMMER and Clustal are optional requirements - they are being run only in a couple of modes of the application.
+  In Linux, the required software can be installed via:
+  -`sudo apt install clustalo` for ClustalO
+  -`sudo apt install clustalw` for ClustalW
+  For Node, it is usually useful to install it alongside [Node Version Manager](https://github.com/nvm-sh/nvm) and pick version through it:
+  `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash` and follow it by `nvm install node`
   
 ## Running
 
