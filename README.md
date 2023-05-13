@@ -39,7 +39,7 @@ A suggestion would be to use tools currently available on [The Galaxy Platform](
 
 7 - Sequence shortener - This mode takes the sequences and cuts a 140bp section from the middle of it. This mode was created to have a simplified version of the training data as it has the center of the nucleosome in the middle.
 
-8 - Filtered nHMMER runner - this mode requires HMMER to be present. It runs the `nhmmer` command and outputs a file that was filtered in a way, so that outputs with 0 hits are removed. Inputs are required in the same order as usual - hmm input file and sequences file.
+8 - Filtered nHMMER - this mode requires HMMER to be present. It runs the `nhmmer` command and outputs a file that was filtered in a way, so that outputs with 0 hits are removed. Inputs are required in the same order as usual - hmm input file and sequences file. The configuration is set for 8 threads to run at once for fastest performance.
 
 ### Installation and running
 
